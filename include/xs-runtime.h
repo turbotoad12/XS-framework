@@ -1,18 +1,12 @@
-#include <3ds.h>
 
 namespace xs {
     namespace os {
-
-    /**
+        /**
      * @brief Checks if the current system is a New 3DS.
      * 
      * @return true 
      * @return false 
      */
-    bool isNew3DS() {
-        bool out = false;
-        APT_CheckNew3DS(&out);
-        return out;
+        bool isNew3DS();
     }
-}
 }
