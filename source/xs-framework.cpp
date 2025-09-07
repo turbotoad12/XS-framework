@@ -1,7 +1,7 @@
 #include <3ds.h>
 
 namespace xs {
-    namespace os {
+    namespace sys {
 
     /**
      * @brief Checks if the current system is a New 3DS.

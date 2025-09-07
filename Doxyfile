@@ -1,8 +1,8 @@
 #--------------------------------------------------------------------------- 
 # Project settings
 #--------------------------------------------------------------------------- 
-PROJECT_NAME           = "XS Runtime"
-PROJECT_BRIEF          = "A C++ runtime library"
+PROJECT_NAME           = "XS Framework"
+PROJECT_BRIEF          = "A 3DS homebrew development framework."
 OUTPUT_DIRECTORY       = docs
 CREATE_SUBDIRS         = NO
 

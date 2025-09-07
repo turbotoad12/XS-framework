@@ -1,2 +1,2 @@
-# XS-runtime
+# XS Framework
 
