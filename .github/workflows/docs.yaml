@@ -25,18 +25,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # Not strictly required here but safe to keep
+          persist-credentials: true
+
       - name: Doxygen Action
         uses: mattnotmitt/doxygen-action@v1.1.0
         with:
-        # Path to Doxyfile
-          doxyfile-path: "./Doxyfile" # default is ./Doxyfile
-        # Working directory
-          working-directory: "." # default is .
+          # Path to Doxyfile (adjust if your Doxyfile outputs to a different folder)
+          doxyfile-path: "./Doxyfile"
+          # Working directory where Doxygen will run
+          working-directory: "."
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire repository
-          path: './html'
+          # Make sure this matches the OUTPUT_DIRECTORY in your Doxyfile
+            path: './docs/html'
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
