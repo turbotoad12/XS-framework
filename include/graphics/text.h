@@ -3,6 +3,10 @@
 #include <citro2d.h>
 #include <string>
 
+/**
+ * @brief Graphics-related utilities.
+ *
+ */
 namespace xs::graphics {
 
     /**

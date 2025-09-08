@@ -2,8 +2,14 @@
 // --- Graphics includes ---
 #include "graphics/text.h"
 
+// --- Filesystem includes ---
+#include "fs/fs.h"
 
 namespace xs {
+    /**
+     * @brief System-related utilities.
+     *
+     */
     namespace sys {
         /**
      * @brief Checks if the current system is a New 3DS.

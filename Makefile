@@ -1,122 +1,113 @@
 #---------------------------------------------------------------------------------
-.SUFFIXES:
+# XS-Framework 3DS Static Library Makefile
 #---------------------------------------------------------------------------------
 
-ifeq ($(strip $(DEVKITARM)),)
-$(error "Please set DEVKITARM in your environment. export DEVKITARM=<path to>devkitARM")
+# Check environment
+ifeq ($(strip $(DEVKITPRO)),)
+$(error "Please set DEVKITPRO in your environment. e.g., export DEVKITPRO=/opt/devkitpro")
 endif
 
+ifeq ($(strip $(DEVKITARM)),)
+$(error "Please set DEVKITARM in your environment. e.g., export DEVKITARM=$(DEVKITPRO)/devkitARM")
+endif
+
+# Include devkitPro 3DS rules
 include $(DEVKITARM)/3ds_rules
 
 #---------------------------------------------------------------------------------
-# TARGET is the name of the output
-# BUILD is the directory where object files & intermediate files will be placed
-# SOURCES is a list of directories containing source code
-# DATA is a list of directories containing data files
-# INCLUDES is a list of directories containing header files
+# Project settings
 #---------------------------------------------------------------------------------
-TARGET		:=	xs-runtime
-BUILD		:=	build
-SOURCES		:=	source
-DATA		:=	data
-INCLUDES	:=	include
+TARGET      := xs-framework
+BUILD       := build
+SOURCES     := $(shell find source -type d)
+INCLUDES    := include
+DATA        := data
 
 #---------------------------------------------------------------------------------
-# options for code generation
+# Compiler settings (use devkitARM explicitly)
 #---------------------------------------------------------------------------------
-ARCH	:=	-march=armv6k -mtune=mpcore -mfloat-abi=hard -mtp=soft
+CXX        := $(DEVKITARM)/bin/arm-none-eabi-g++
+CC         := $(DEVKITARM)/bin/arm-none-eabi-gcc
+AS         := $(DEVKITARM)/bin/arm-none-eabi-as
+AR         := $(DEVKITARM)/bin/arm-none-eabi-ar
 
-CFLAGS	:=	-g -Wall -O2 -mword-relocations \
-			-ffunction-sections \
-			$(ARCH)
+ARCH       := -march=armv6k -mtune=mpcore -mfloat-abi=hard -mtp=soft
 
-CFLAGS	+=	$(INCLUDE) -D__3DS__
-CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions
-
-ASFLAGS	:=	-g $(ARCH)	
-
-#---------------------------------------------------------------------------------
-# list of directories containing libraries, this must be the top level containing
-# include and lib
-#---------------------------------------------------------------------------------
-LIBDIRS	:=	$(CTRULIB)
+CFLAGS     := -g -Wall -O2 -mword-relocations -ffunction-sections $(ARCH) -D__3DS__
+CXXFLAGS   := $(CFLAGS) -fno-rtti -fno-exceptions
+ASFLAGS    := -g $(ARCH)
 
 #---------------------------------------------------------------------------------
-# no real need to edit anything past this point unless you need to add additional
-# rules for different file extensions
+# Library include paths
 #---------------------------------------------------------------------------------
-ifneq ($(BUILD),$(notdir $(CURDIR)))
-#---------------------------------------------------------------------------------
+LIBCTRU_INCLUDE := $(DEVKITPRO)/libctru/include
+CITRO2D_INCLUDE := $(DEVKITPRO)/citro2d/include
 
-export OUTPUT	:=	$(CURDIR)/lib/$(TARGET).a
-
-export VPATH	:=	$(foreach dir,$(SOURCES),$(CURDIR)/$(dir)) \
-			$(foreach dir,$(DATA),$(CURDIR)/$(dir))
-
-export DEPSDIR	:=	$(CURDIR)/$(BUILD)
-
-CFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.c)))
-CPPFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.cpp)))
-SFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.s)))
-BINFILES	:=	$(foreach dir,$(DATA),$(notdir $(wildcard $(dir)/*.*)))
+INCLUDE_FLAGS := $(foreach dir,$(INCLUDES),-I$(CURDIR)/$(dir)) \
+                 -I$(LIBCTRU_INCLUDE) \
+                 -I$(CITRO2D_INCLUDE) \
+                 -I$(CURDIR)/$(BUILD)
 
 #---------------------------------------------------------------------------------
-# use CXX for linking C++ projects, CC for standard C
+# Source files
 #---------------------------------------------------------------------------------
-ifeq ($(strip $(CPPFILES)),)
-#---------------------------------------------------------------------------------
-	export LD	:=	$(CC)
-#---------------------------------------------------------------------------------
-else
-#---------------------------------------------------------------------------------
-	export LD	:=	$(CXX)
-#---------------------------------------------------------------------------------
-endif
-#---------------------------------------------------------------------------------
+CPPFILES := $(foreach dir,$(SOURCES),$(wildcard $(dir)/*.cpp))
+CFILES   := $(foreach dir,$(SOURCES),$(wildcard $(dir)/*.c))
+SFILES   := $(foreach dir,$(SOURCES),$(wildcard $(dir)/*.s))
+BINFILES := $(foreach dir,$(DATA),$(notdir $(wildcard $(dir)/*.*)))
 
-export OFILES	:=	$(addsuffix .o,$(BINFILES)) \
-			$(CPPFILES:.cpp=.o) $(CFILES:.c=.o) $(SFILES:.s=.o)
+# Object files go into build/
+OFILES := $(addprefix $(BUILD)/, \
+           $(CPPFILES:.cpp=.o) \
+           $(CFILES:.c=.o) \
+           $(SFILES:.s=.o))
 
-export INCLUDE	:=	$(foreach dir,$(INCLUDES),-I$(CURDIR)/$(dir)) \
-			$(foreach dir,$(LIBDIRS),-I$(dir)/include) \
-			-I$(CURDIR)/$(BUILD)
-
-.PHONY: $(BUILD) clean all
+DEPENDS := $(OFILES:.o=.d)
 
 #---------------------------------------------------------------------------------
-all: $(BUILD)
-
-lib:
-	@[ -d $@ ] || mkdir -p $@
-	
-$(BUILD): lib
-	@[ -d $@ ] || mkdir -p $@
-	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
-
+# Main targets
 #---------------------------------------------------------------------------------
-clean:
-	@echo clean ...
-	@rm -fr $(BUILD) lib
+.PHONY: all clean
+
+all: lib/$(TARGET).a
+
+lib/$(TARGET).a: $(OFILES)
+	@mkdir -p lib
+	@echo "Archiving $@"
+	@$(AR) rcs $@ $^
 
 #---------------------------------------------------------------------------------
-else
+# Compile rules
+#---------------------------------------------------------------------------------
+$(BUILD)/%.o: %.cpp
+	@mkdir -p $(dir $@)
+	@echo "CXX $<"
+	@$(CXX) $(CXXFLAGS) $(INCLUDE_FLAGS) -MMD -MP -c $< -o $@
 
-DEPENDS	:=	$(OFILES:.o=.d)
+$(BUILD)/%.o: %.c
+	@mkdir -p $(dir $@)
+	@echo "CC $<"
+	@$(CC) $(CFLAGS) $(INCLUDE_FLAGS) -MMD -MP -c $< -o $@
+
+$(BUILD)/%.o: %.s
+	@mkdir -p $(dir $@)
+	@echo "AS $<"
+	@$(AS) $(ASFLAGS) -c $< -o $@
 
 #---------------------------------------------------------------------------------
-# main targets
+# Binary data conversion
 #---------------------------------------------------------------------------------
-$(OUTPUT)	:	$(OFILES)
-
-#---------------------------------------------------------------------------------
-%.bin.o	:	%.bin
-#---------------------------------------------------------------------------------
-	@echo $(notdir $<)
+%.bin.o: %.bin
+	@echo "BIN $<"
 	@$(bin2o)
 
+#---------------------------------------------------------------------------------
+# Cleanup
+#---------------------------------------------------------------------------------
+clean:
+	@echo "Cleaning..."
+	@rm -rf $(BUILD) lib
 
+#---------------------------------------------------------------------------------
 -include $(DEPENDS)
-
-#---------------------------------------------------------------------------------------
-endif
-#---------------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------
