@@ -1,3 +1,7 @@
+#include <3ds.h>
+// --- Graphics includes ---
+#include "graphics/text.h"
+
 
 namespace xs {
     namespace sys {
