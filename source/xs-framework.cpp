@@ -1,5 +1,4 @@
-#include <3ds.h>
-
+#include "xs-framework.h"
 namespace xs {
     namespace sys {
 

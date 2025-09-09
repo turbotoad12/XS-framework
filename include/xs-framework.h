@@ -5,6 +5,9 @@
 // --- Filesystem includes ---
 #include "fs/fs.h"
 
+// --- HID includes ---
+#include "hid/controls.h"
+
 namespace xs {
     /**
      * @brief System-related utilities.
