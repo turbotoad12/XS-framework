@@ -36,8 +36,8 @@ namespace xs::sys {
         /**
          * @brief Add a text notification (no image).
          * 
-         * @param title Title text (UTF-8, ASCII only for now)
-         * @param message Message text (UTF-8, ASCII only for now)
+         * @param title Title text
+         * @param message Message text
          * @return true if notification was added successfully
          */
         bool addNotification(const std::string& title, const std::string& message) {
