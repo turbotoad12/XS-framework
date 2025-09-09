@@ -1,9 +1,11 @@
 #include <3ds.h>
+
 // --- Graphics includes ---
 #include "graphics/text.h"
+#include "graphics/colors.h"
 
 // --- Filesystem includes ---
-#include "fs/fs.h"
+#include "fs/sdmc.h"
 
 // --- HID includes ---
 #include "hid/controls.h"
