@@ -1,4 +1,7 @@
-// SPDX-License-Identifier: MIT
+/**
+ * @file colors.h
+ * @brief Common color constants for graphics (RGBA packed into u32).
+ */
 #pragma once
 
 #include <3ds.h>

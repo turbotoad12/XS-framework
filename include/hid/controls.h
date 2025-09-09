@@ -1,3 +1,8 @@
+/**
+ * @file controls.h
+ * @brief HID (Human Interface Device) related utilities.
+ *
+ */
 #pragma once
 
 #include <3ds.h>

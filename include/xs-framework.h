@@ -1,3 +1,11 @@
+/**
+ * @file xs-framework.h
+ * @brief Core framework utilities for XS-runtime.
+ *
+ * This header includes essential modules for graphics, filesystem, and HID controls,
+ * providing a unified interface for the XS-runtime framework.
+ */
+
 #include <3ds.h>
 
 // --- Graphics includes ---

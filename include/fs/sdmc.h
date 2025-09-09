@@ -1,3 +1,7 @@
+/**
+ * @file sdmc.h
+ * @brief SDMC (SD Card) related utilities.
+ */
 #pragma once
 
 #include <3ds.h>
