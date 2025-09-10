@@ -1,5 +1,7 @@
 #include "graphics/colors.h"
 
+
+
 namespace xs::graphics {
     // Define color constants
     const u32 clrWhite = C2D_Color32(255, 255, 255, 255);
