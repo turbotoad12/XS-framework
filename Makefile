@@ -17,7 +17,7 @@ include $(DEVKITARM)/3ds_rules
 #---------------------------------------------------------------------------------
 # Project settings
 #---------------------------------------------------------------------------------
-TARGET      := xs-framework
+TARGET      := libxs-framework
 BUILD       := build
 SOURCES     := $(shell find source -type d)
 INCLUDES    := include

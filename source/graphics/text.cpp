@@ -1,4 +1,8 @@
-
+/**
+ * @file text.cpp
+ * @brief Text rendering functionality.
+ * 
+ */
 #include "graphics/text.h"
 
 namespace xs::graphics {
