@@ -11,39 +11,37 @@
 namespace xs::hid::control {
 
 	/**
-	 * @brief Scan the current state of all input devices.
-	 *
-	 * Calls libctru's hidScanInput() to sample controllers. This should be
-	 * called once per frame before querying key/button state.
-	 */
-	inline void ScanInput();
+     * @brief Scans the current state of all input devices.
+     */
+    inline void ScanInput() {
+        hidScanInput();
+    }
 
-	/**
-	 * @brief Returns keys that were pressed since the last scan.
-	 *
-	 * @return u32 Bitmask of keys pressed (use HID macros to decode).
-	 */
-	inline u32 GetKeysPressed();
+    /**
+     * @brief Gets the keys that were just pressed.
+     */
+    inline u32 GetKeysPressed() {
+        return hidKeysDown();
+    }
 
-	/**
-	 * @brief Returns keys currently held down.
-	 *
-	 * @return u32 Bitmask of keys held.
-	 */
-	inline u32 GetKeysHeld();
+    /**
+     * @brief Gets the keys that are currently being held.
+     */
+    inline u32 GetKeysHeld() {
+        return hidKeysHeld();
+    }
 
-	/**
-	 * @brief Returns keys that were released since the last scan.
-	 *
-	 * @return u32 Bitmask of keys released.
-	 */
-	inline u32 GetKeysReleased();
+    /**
+     * @brief Gets the keys that were just released.
+     */
+    inline u32 GetKeysReleased() {
+        return hidKeysUp();
+    }
 
-	/**
-	 * @brief Reads the current circle pad position.
-	 *
-	 * @return circlePosition Current circle pad position.
-	 */
-	inline circlePosition GetCirclePadPosition();
+    /**
+     * @brief Gets the current position of the circle pad.
+     * @return circlePosition Current circle pad position.
+     */
+    circlePosition GetCirclePadPosition();
 
 }

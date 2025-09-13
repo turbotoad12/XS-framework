@@ -6,7 +6,6 @@
  * providing a unified interface for the XS-runtime framework.
  */
 // --- Graphics includes ---
-#include "graphics/text.h"
 #include "graphics/colors.h"
 
 // --- Filesystem includes ---

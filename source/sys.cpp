@@ -1,6 +1,4 @@
-#include <3ds.h>
-#include <string>
-#include <vector>
+#include "sys.h"
 
 /**
  * @brief System-related utilities.
@@ -12,7 +10,7 @@ namespace xs::sys {
      * 
      * @return true if running on a New 3DS, false otherwise
      */
-    inline bool isNew3DS() {
+    bool isNew3DS() {
         bool out = false;
         APT_CheckNew3DS(&out);
         return out;
@@ -68,4 +66,4 @@ namespace xs::sys {
     };
     
 
-} // namespace xs::sys
+}
