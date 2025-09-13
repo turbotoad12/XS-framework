@@ -4,7 +4,10 @@ set -e
 DEVKITPRO=${DEVKITPRO:-/opt/devkitpro}
 PORTLIBS="$DEVKITPRO/portlibs/3ds"
 
+
 echo "Building XS Framework..."
+export DEVKITPRO=/opt/devkitpro
+export DEVKITARM=/opt/devkitpro/devkitARM
 make clean
 make
 
@@ -22,4 +25,4 @@ sudo cp lib/libxs-framework.a /opt/devkitpro/portlibs/3ds/lib/
 
 
 echo "XS Framework installed!"
-echo "Use with: #include <xs-framework.h> and -lxs-framework"
+echo "Make sure to use the provided templates!"
