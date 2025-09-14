@@ -7,6 +7,7 @@
  */
 // --- Graphics includes ---
 #include "graphics/colors.h"
+#include "graphics/screen.h"
 
 // --- Filesystem includes ---
 #include "fs/sdmc.h"

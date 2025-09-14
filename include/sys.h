@@ -21,6 +21,17 @@ namespace xs::sys {
     bool isNew3DS();
 
     /**
+     * @brief Main Loop. Run this every frame!
+     * 
+     * @return true
+     */
+    bool MainLoop()
+    {
+        aptMainLoop();
+        return true;
+    }
+    
+    /**
      * @brief 3DS Notification utilities.
      */
     class News {

@@ -12,5 +12,5 @@ Run the following command, you might need to input your password.
 
 ```bash
 chmod +x install.sh
-sudo ./install.sh
+./install.sh
 ```

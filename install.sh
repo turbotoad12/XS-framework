@@ -2,13 +2,9 @@
 set -e
 
 DEVKITPRO=${DEVKITPRO:-/opt/devkitpro}
-PORTLIBS="$DEVKITPRO/portlibs/3ds"
-
+PORTLIBS="${PORTLIBS:-$DEVKITPRO/portlibs/3ds}"
 
 echo "Building XS Framework..."
-export DEVKITPRO=/opt/devkitpro
-export DEVKITARM=/opt/devkitpro/devkitARM
-make clean
 make
 
 echo "Installing XS Framework to $PORTLIBS"
@@ -17,12 +13,29 @@ echo "Installing XS Framework to $PORTLIBS"
 mkdir -p "$PORTLIBS/include"
 mkdir -p "$PORTLIBS/lib"
 
-# Copy headers into the portlibs include folder
-sudo cp -r include/* /opt/devkitpro/portlibs/3ds/include/
+# Iterate all files and directories under include/ and remove any existing
+# matching files from $PORTLIBS/include before copying the new ones.
+while IFS= read -r -d '' src; do
+	# Get relative path under include/
+	rel=${src#include/}
+	dest="$PORTLIBS/include/$rel"
+
+	if [ -e "$dest" ] || [ -L "$dest" ]; then
+		echo "Removing existing: $dest"
+		sudo rm -rf "$dest"
+	fi
+
+	# Ensure destination directory exists
+	destdir=$(dirname "$dest")
+	mkdir -p "$destdir"
+
+	echo "Copying $src -> $dest"
+	sudo cp -r "$src" "$dest"
+done < <(find include -mindepth 1 -print0)
 
 # Copy your static library
-sudo cp lib/libxs-framework.a /opt/devkitpro/portlibs/3ds/lib/
-
+echo "Copying library to $PORTLIBS/lib/"
+sudo cp lib/libxs-framework.a "$PORTLIBS/lib/"
 
 echo "XS Framework installed!"
 echo "Make sure to use the provided templates!"
