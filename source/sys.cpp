@@ -1,5 +1,5 @@
 #include "sys.h"
-
+#include "service.h"
 /**
  * @brief System-related utilities.
  */
@@ -16,16 +16,8 @@ namespace xs::sys {
         return out;
     }
     // Implementations for xs::sys::News declared in include/sys.h
-
-    News::News() {
-        newsInit(); // start NEWS service
-    }
-
-    News::~News() {
-        newsExit(); // clean up NEWS service
-    }
-
-    bool News::addNotification(const std::string& title, const std::string& message) {
+    namespace news {
+    bool addNotification(const std::string& title, const std::string& message) {
         std::vector<u16> title16(title.size() + 1);
         std::vector<u16> message16(message.size() + 1);
 
@@ -41,12 +33,12 @@ namespace xs::sys {
         return R_SUCCEEDED(res);
     }
 
-    void News::utf8ToUtf16(u16* dst, const char* src, size_t maxChars) {
+    void utf8ToUtf16(u16* dst, const char* src, size_t maxChars) {
         size_t i;
         for (i = 0; i < maxChars && src[i] != '\0'; i++) {
             dst[i] = static_cast<u16>(src[i]);
         }
         dst[i] = 0;
     }
-
+}
 }

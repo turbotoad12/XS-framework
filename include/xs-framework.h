@@ -17,5 +17,6 @@
 
 // --- Core framework includes ---
 #include "sys.h"
+#include "service.h"
 
 namespace xs {}

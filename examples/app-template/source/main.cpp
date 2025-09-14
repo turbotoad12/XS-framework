@@ -1,14 +1,13 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include <xs-framework.h>
 
+// Using namespaces for convenience
 using namespace xs;
+using namespace xs::services;
 
 int main(int argc, char* argv[])
 {
-	gfxInitDefault();
-	consoleInit(GFX_TOP, NULL);
+	xs::sys::Services services(GFX_SERVICE | CONSOLE_TOP);
+
 	printf("Hello, world!\n");
 
 	// Main loop
@@ -24,6 +23,5 @@ int main(int argc, char* argv[])
 			break; // break in order to return to hbmenu
 	}
 
-	gfxExit();
 	return 0;
 }

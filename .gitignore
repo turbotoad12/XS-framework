@@ -40,3 +40,9 @@ lib/
 docs/
 html/
 latex/
+
+# 3DS output
+*.3dsx
+*.elf
+*.cia
+*.smdh
