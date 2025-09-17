@@ -9,28 +9,28 @@ endif
 TOPDIR ?= $(CURDIR)
 include $(DEVKITARM)/3ds_rules
 
+PKGCONF_3DS	:=	$(DEVKITPRO)/portlibs/3ds/bin/arm-none-eabi-pkg-config
+
 #---------------------------------------------------------------------------------
-# TARGET is the name of the output
-# BUILD is the directory where object files & intermediate files will be placed
-# SOURCES is a list of directories containing source code
-# DATA is a list of directories containing data files
-# INCLUDES is a list of directories containing header files
-# GRAPHICS is a list of directories containing graphics files
-# GFXBUILD is the directory where converted graphics files will be placed
-#   If set to $(BUILD), it will statically link in the converted
-#   files as if they were data files.
-#
-# NO_SMDH: if set to anything, no SMDH file is generated.
-# ROMFS is the directory which contains the RomFS, relative to the Makefile (Optional)
-# APP_TITLE is the name of the app stored in the SMDH file (Optional)
-# APP_DESCRIPTION is the description of the app stored in the SMDH file (Optional)
-# APP_AUTHOR is the author of the app stored in the SMDH file (Optional)
-# ICON is the filename of the icon (.png), relative to the project folder.
-#   If not set, it attempts to use one of the following (in this order):
-#     - <Project name>.png
-#     - icon.png
-#     - <libctru folder>/default_icon.png
+#	Application Info
 #---------------------------------------------------------------------------------
+APP_TITLE 	:=	XS App
+APP_DESCRIPTION := XS-Framework Application
+APP_AUTHOR 	:= XS-Framework Team
+TARGET		:=	XS-app
+
+# CIA / banner assets (for makerom & bannertool)
+BANNER_PNG 	:= $(TOPDIR)/banner.png
+BANNER_WAV 	:= $(TOPDIR)/banner.wav
+ICON_PNG   	:= $(TOPDIR)/icon.png
+RSF_FILE   	:= $(TOPDIR)/makerom.rsf
+
+# External tools (override if needed)
+BANNERTOOL ?= bannertool
+MAKEROM    ?= makerom
+#---------------------------------------------------------------------------------
+#	Build Info
+##---------------------------------------------------------------------------------
 TARGET		:=	$(notdir $(CURDIR))
 BUILD		:=	build
 SOURCES		:=	source
@@ -183,7 +183,7 @@ endif
 #---------------------------------------------------------------------------------
 clean:
 	@echo clean ...
-	@rm -fr $(BUILD) $(TARGET).3dsx $(OUTPUT).smdh $(TARGET).elf $(GFXBUILD)
+	@rm -fr $(BUILD) $(TARGET).cia $(OUTPUT).smdh $(TARGET).elf $(GFXBUILD)
 
 #---------------------------------------------------------------------------------
 $(GFXBUILD)/%.t3x	$(BUILD)/%.h	:	%.t3s
@@ -197,11 +197,27 @@ else
 #---------------------------------------------------------------------------------
 # main targets
 #---------------------------------------------------------------------------------
-$(OUTPUT).3dsx	:	$(OUTPUT).elf $(_3DSXDEPS)
+$(OUTPUT).cia	:	$(OUTPUT).elf
 
 $(OFILES_SOURCES) : $(HFILES)
 
 $(OUTPUT).elf	:	$(OFILES)
+
+#---------------------------------------------------------------------------------
+# CIA build (makerom + bannertool)
+#---------------------------------------------------------------------------------
+banner.bnr: $(BANNER_PNG) $(BANNER_WAV)
+	@$(BANNERTOOL) makebanner -i $(BANNER_PNG) -a $(BANNER_WAV) -o $@
+	@echo "built ... $@"
+
+icon.smdh: $(ICON_PNG)
+	@$(BANNERTOOL) makesmdh -s "$(APP_TITLE)" -l "$(APP_DESCRIPTION)" -p "$(APP_AUTHOR)" -i $(ICON_PNG) -o $@
+	@echo "built ... $@"
+
+$(OUTPUT).cia: $(OUTPUT).elf banner.bnr icon.smdh $(RSF_FILE)
+	@pwd
+	@$(MAKEROM) -f cia -o $@ -elf $(OUTPUT).elf -rsf $(RSF_FILE) -banner banner.bnr -icon icon.smdh -target t -exefslogo
+	@echo "built ... $@"
 
 #---------------------------------------------------------------------------------
 # you need a rule like this for each extension you use as binary data

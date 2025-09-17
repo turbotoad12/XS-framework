@@ -42,7 +42,7 @@ html/
 latex/
 
 # 3DS output
-*.3dsx
+*.bnr
 *.elf
 *.cia
 *.smdh
