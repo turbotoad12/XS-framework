@@ -12,7 +12,7 @@ namespace xs::graphics {
     const u32 clrYellow = C2D_Color32(255, 255, 0, 255);
     const u32 clrCyan = C2D_Color32(0, 255, 255, 255);
     const u32 clrMagenta = C2D_Color32(255, 0, 255, 255);
-    const u32 clrClear = C2D_Color32(0xFF, 0xD8, 0xB0, 0x68);
+    const u32 clrClear = C2D_Color32(0, 0, 0, 0);
 
 
     /**
