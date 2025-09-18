@@ -10,5 +10,14 @@ namespace xs::hid::control {
         hidCircleRead(&pos);
         return pos;
     }
+    /**
+     * @brief Gets the current position of the touch screen.
+     * @return touchPosition Current touch screen position.
+     */
+    touchPosition GetTouchPosition() {
+        touchPosition pos;
+        hidTouchRead(&pos);
+        return pos;
+    }
 
 }

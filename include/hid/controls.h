@@ -43,5 +43,9 @@ namespace xs::hid::control {
      * @return circlePosition Current circle pad position.
      */
     circlePosition GetCirclePadPosition();
-
+    /**
+     * @brief Gets the current position of the touch screen.
+     * @return touchPosition Current touch screen position.
+     */
+    touchPosition GetTouchPosition();
 }
