@@ -10,7 +10,7 @@
 #include "graphics/screen.h"
 
 // --- Filesystem includes ---
-#include "fs/sdmc.h"
+#include "fs.h"
 
 // --- HID includes ---
 #include "hid/controls.h"
