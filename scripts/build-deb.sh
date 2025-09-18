@@ -14,7 +14,7 @@ DEVKITPRO=${DEVKITPRO:-/opt/devkitpro}
 PORTLIBS="${PORTLIBS:-$DEVKITPRO/portlibs/3ds}"
 
 
-BUILD_DIR="build/${PKG_NAME}_${PKG_VERSION}"
+BUILD_DIR="build/${PKG_NAME}"
 DEBIAN_DIR="${BUILD_DIR}/DEBIAN"
 
 rm -rf "${BUILD_DIR}"
