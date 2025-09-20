@@ -28,12 +28,12 @@ namespace xs::graphics {
             str = str.substr(1);
         }
         if (str.length() != 6) {
-            return clrBlack; // Default to black on error
+            return clrMagenta; // Default to magenta on error
         }
         u8 r = static_cast<u8>(std::stoi(str.substr(0, 2), nullptr, 16));
         u8 g = static_cast<u8>(std::stoi(str.substr(2, 2), nullptr, 16));
         u8 b = static_cast<u8>(std::stoi(str.substr(4, 2), nullptr, 16));
-        // if theres an error display clrMegenta
+        // if theres an error display clrMagenta
         if (r == 0 && g == 0 && b == 0 && str != "000000") {
             return clrMagenta;
         }
