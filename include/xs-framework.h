@@ -14,6 +14,7 @@
 
 // --- HID includes ---
 #include "hid/controls.h"
+#include "hid/swkbd.h"
 
 // --- Core framework includes ---
 #include "sys.h"
