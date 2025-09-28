@@ -1,4 +1,4 @@
-#include <xs-framework.h>
+#include <xs-framework.hpp>
 
 // Using namespaces for convenience
 using namespace xs;
