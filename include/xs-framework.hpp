@@ -6,18 +6,18 @@
  * providing a unified interface for the XS-runtime framework.
  */
 // --- Graphics includes ---
-#include "graphics/colors.h"
-#include "graphics/screen.h"
+#include "graphics/colors.hpp"
+#include "graphics/screen.hpp"
 
 // --- Filesystem includes ---
-#include "fs.h"
+#include "fs.hpp"
 
 // --- HID includes ---
-#include "hid/controls.h"
-#include "hid/swkbd.h"
+#include "hid/controls.hpp"
+#include "hid/swkbd.hpp"
 
 // --- Core framework includes ---
-#include "sys.h"
-#include "service.h"
+#include "sys.hpp"
+#include "service.hpp"
 
 namespace xs {}

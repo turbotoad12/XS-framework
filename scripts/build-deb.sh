@@ -3,7 +3,7 @@
 set -e
 
 PKG_NAME="xs-framework"
-PKG_VERSION="1.0.0"
+PKG_VERSION="2.0"
 PKG_ARCH="amd64"
 PKG_MAINTAINER="TurboToad12 <me@turbotoad.space>"
 PKG_DESCRIPTION="XS Framework - A simple C++ framework for 3DS homebrew development."

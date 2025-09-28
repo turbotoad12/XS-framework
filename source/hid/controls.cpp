@@ -1,4 +1,4 @@
-#include "hid/controls.h"
+#include "hid/controls.hpp"
 
 namespace xs::hid::control {
     /**

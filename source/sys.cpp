@@ -1,5 +1,5 @@
-#include "sys.h"
-#include "service.h"
+#include "sys.hpp"
+#include "service.hpp"
 /**
  * @brief System-related utilities.
  */

@@ -1,4 +1,4 @@
-#include "hid/swkbd.h"
+#include "hid/swkbd.hpp"
 
 
 namespace xs::hid {
