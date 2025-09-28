@@ -6,18 +6,28 @@ using namespace xs::services;
 
 int main(int argc, char* argv[])
 {
-	sys::Services services(GFX_SERVICE | CONSOLE_TOP);
+	xs::sys::Services services(GFX_SERVICE | CONSOLE_TOP);
 
 	hid::Swkbd keyboard(hid::SWKBD_NORMAL, 128);
+	keyboard.setHint("Enter a filepath:");
+	std::string path = keyboard.getInput();
 	keyboard.setHint("Enter some text:");
-	std::string input = keyboard.getInput();
-	if (!input.empty()) {
-		printf("You entered: %s\n", input.c_str());
+	std::string text = keyboard.getInput();
+
+	// Write To the file
+	xs::fs::WriteFile("sdmc:/" + path, text);
+	printf("Wrote to sdmc:/ %s\n", path.c_str());
+
+	// Read FIle
+	std::string fileData = xs::fs::ReadFile("sdmc:/" + path);
+	if (!fileData.empty()) {
+		printf("File contents:\n%s\n", fileData.c_str());
 	} else {
-		printf("No input or cancelled.\n");
+		printf("File is empty or missing.\n");
 	}
+
 	// Main loop
-	while (sys::MainLoop())
+	while (xs::sys::MainLoop())
 	{
 		graphics::screen::WaitForScreen();
 		graphics::screen::SwapFrameBuffers();

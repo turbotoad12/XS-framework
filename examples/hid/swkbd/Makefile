@@ -215,7 +215,6 @@ icon.smdh: $(ICON_PNG)
 	@echo "built ... $@"
 
 $(OUTPUT).cia: $(OUTPUT).elf banner.bnr icon.smdh $(RSF_FILE)
-	@pwd
 	@$(MAKEROM) -f cia -o $@ -elf $(OUTPUT).elf -rsf $(RSF_FILE) -banner banner.bnr -icon icon.smdh -target t -exefslogo
 	@echo "built ... $@"
 
