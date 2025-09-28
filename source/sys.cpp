@@ -1,5 +1,6 @@
 #include "sys.hpp"
 #include "service.hpp"
+#include "errors.hpp"
 /**
  * @brief System-related utilities.
  */
@@ -30,7 +31,11 @@ namespace xs::sys {
             nullptr, 0,
             false
         );
-        return R_SUCCEEDED(res);
+        if (R_FAILED(res)) {
+            xs::errors::show(res, true); // shows applet with decoded error
+            return false;
+        }
+        return true;
     }
 
     void utf8ToUtf16(u16* dst, const char* src, size_t maxChars) {

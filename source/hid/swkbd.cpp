@@ -1,5 +1,5 @@
 #include "hid/swkbd.hpp"
-
+#include "errors.hpp"
 
 namespace xs::hid {
 
@@ -30,8 +30,12 @@ namespace xs::hid {
         std::string out;
         out.resize(maxLen + 1);
 
+        
         Result res = swkbdInputText(&kbd, out.data(), out.size());
-        if (R_FAILED(res)) return "";
+        if (R_FAILED(res)) {
+            xs::errors::show(res, true); // shows applet with decoded error
+            return "";
+        }
         out.shrink_to_fit();
         return out;
     }

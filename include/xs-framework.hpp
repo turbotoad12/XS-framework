@@ -19,5 +19,5 @@
 // --- Core framework includes ---
 #include "sys.hpp"
 #include "service.hpp"
-
+#include "errors.hpp"
 namespace xs {}

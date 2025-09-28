@@ -2,6 +2,7 @@
 
 #include <3ds.h>
 #include <string.h>
+#include "colors.hpp"
 
 namespace xs::graphics::screen
 {
@@ -12,7 +13,18 @@ namespace xs::graphics::screen
     void SwapFrameBuffers() {
         gfxSwapBuffers();
     }
+    /**
+     * @brief Waits for the next screen refresh (VBlank)
+     * 
+     */
     void WaitForScreen() {
         gspWaitForVBlank();
+    }
+    /**
+     * @brief Clears the console.
+     * 
+     */
+    void ClearConsole() {
+        consoleClear();
     }
 }
