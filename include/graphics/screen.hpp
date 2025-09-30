@@ -4,6 +4,9 @@
 #include <string.h>
 #include "colors.hpp"
 
+#define SCREEN_WIDTH  400
+#define SCREEN_HEIGHT 240
+
 namespace xs::graphics::screen
 {
     /**
