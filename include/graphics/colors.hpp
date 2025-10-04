@@ -10,26 +10,26 @@
 
 namespace xs::graphics {
 
-	/**
-	 * @brief Common color constants (RGBA packed into u32 using C2D_Color32).
-	 */
-	///@{
-	extern const u32 clrWhite;
-	extern const u32 clrBlack;
-	extern const u32 clrRed;
-	extern const u32 clrGreen;
-	extern const u32 clrBlue;
-	extern const u32 clrYellow;
-	extern const u32 clrCyan;
-	extern const u32 clrMagenta;
-	extern const u32 clrClear;
-	///@}
-	/**
-     * @brief Convert a hex color string to a u32 color value.
-     * @param hexStr The hex color string (e.g., "#RRGGBB" or "RRGGBB").
-     * @param alpha Value from 0-255 (Transparency)
-     * @return u32 (or C2D_Color32)
-     */
-    u32 color(const std::string& hexStr, int alpha);
+/**
+ * @brief Common color constants (RGBA packed into u32 using C2D_Color32).
+ */
+///@{
+extern const u32 clrWhite;
+extern const u32 clrBlack;
+extern const u32 clrRed;
+extern const u32 clrGreen;
+extern const u32 clrBlue;
+extern const u32 clrYellow;
+extern const u32 clrCyan;
+extern const u32 clrMagenta;
+extern const u32 clrClear;
+///@}
+/**
+ * @brief Convert a hex color string to a u32 color value.
+ * @param hexStr The hex color string (e.g., "#RRGGBB" or "RRGGBB").
+ * @param alpha Value from 0-255 (Transparency)
+ * @return u32 (or C2D_Color32)
+ */
+u32 color(const std::string &hexStr, int alpha);
 
-}
+} // namespace xs::graphics
