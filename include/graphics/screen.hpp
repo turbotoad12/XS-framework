@@ -2,6 +2,7 @@
 
 #include <3ds.h>
 #include <string.h>
+#include <cstdio>
 #include "colors.hpp"
 
 #define SCREEN_WIDTH  400
@@ -13,21 +14,34 @@ namespace xs::graphics::screen
      * @brief Swaps Frame Buffers
      * 
      */
-    void SwapFrameBuffers() {
+    inline void SwapFrameBuffers() {
         gfxSwapBuffers();
     }
     /**
      * @brief Waits for the next screen refresh (VBlank)
      * 
      */
-    void WaitForScreen() {
+    inline void WaitForScreen() {
         gspWaitForVBlank();
     }
     /**
      * @brief Clears the console.
      * 
      */
-    void ClearConsole() {
+    inline void ClearConsole() {
         consoleClear();
+    }
+
+    inline void SceneBegin(C3D_RenderTarget* target) {
+        C3D_FrameBegin(0);
+        C2D_SceneBegin(target);
+    }
+
+    inline void ClearScreen(C3D_RenderTarget* target, u32 color) {
+        C2D_TargetClear(target, color);
+    }  
+
+    inline void SceneEnd() {
+        C3D_FrameEnd(0);
     }
 }
