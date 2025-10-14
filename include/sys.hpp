@@ -26,8 +26,8 @@ bool isNew3DS();
  * @return true
  */
 bool MainLoop() {
-  aptMainLoop();
-  return true;
+    aptMainLoop();
+    return true;
 }
 
 /**

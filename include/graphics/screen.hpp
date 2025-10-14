@@ -30,7 +30,7 @@ inline void SceneInit() { C3D_FrameBegin(0); }
 inline void SceneBegin(C3D_RenderTarget *target) { C2D_SceneBegin(target); }
 
 inline void ClearScreen(C3D_RenderTarget *target, u32 color) {
-  C2D_TargetClear(target, color);
+    C2D_TargetClear(target, color);
 }
 
 inline void SceneEnd() { C3D_FrameEnd(0); }

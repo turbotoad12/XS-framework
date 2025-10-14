@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
         
         
         // Print debug info
-        printf("\x1b[1;1HSimple Xs-framework shapes example");
+        printf("\x1b[1;1HSimple Xs-framework lines example");
         printf("\x1b[2;1HCPU:     %6.2f%%\x1b[K", C3D_GetProcessingTime() * 6.0f);
         printf("\x1b[3;1HGPU:     %6.2f%%\x1b[K", C3D_GetDrawingTime() * 6.0f);
         printf("\x1b[4;1HCmdBuf:  %6.2f%%\x1b[K", C3D_GetCmdBufUsage() * 100.0f);
@@ -41,11 +41,11 @@ int main(int argc, char *argv[]) {
         xs::graphics::screen::ClearScreen(top, clrClear);
         xs::graphics::screen::SceneBegin(top);
 
-        // Draw rectangles
-        xs::graphics::DrawSolidRect(50, 50, 0.5f, 100, 50, clrRec1);
-        xs::graphics::DrawSolidRect(100, 80, 0.4f, 100, 50, clrRec2);
-        xs::graphics::DrawSolidRect(150, 110, 0.3f, 100, 50, clrRec3);
-        xs::graphics::DrawSolidRect(200, 140, 0.2f, 100, 50, clrRec4);
+        // Draw Lines
+        xs::graphics::DrawSolidLine(50.0f, 50.0f, 150.0f, 50.0f, 2.0f, 0.5f, clrRec1);
+        xs::graphics::DrawSolidLine(100.0f, 80.0f, 200.0f, 80.0f, 2.0f, 0.4f, clrRec2);
+        xs::graphics::DrawSolidLine(150.0f, 110.0f, 250.0f, 110.0f, 2.0f, 0.3f, clrRec3);
+        xs::graphics::DrawSolidLine(200.0f, 140.0f, 300.0f, 140.0f, 2.0f, 0.2f, clrRec4);
 
         // End frame
         xs::graphics::screen::SceneEnd();

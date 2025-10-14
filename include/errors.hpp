@@ -8,11 +8,7 @@ namespace xs::errors {
 
 // Lookup tables
 static const std::unordered_map<int, const char *> levelNames = {
-    {0, "Success"},         {1, "Info"},
-    {0x1F, "Fatal"},        {0x1E, "Reset"},
-    {0x1D, "Reinitialize"}, {0x1C, "Usage"},
-    {0x1B, "Permanent"},    {0x1A, "Temporary"},
-    {0x19, "Status"}};
+    {0, "Success"}, {1, "Info"}, {0x1F, "Fatal"}, {0x1E, "Reset"}, {0x1D, "Reinitialize"}, {0x1C, "Usage"}, {0x1B, "Permanent"}, {0x1A, "Temporary"}, {0x19, "Status"}};
 
 static const std::unordered_map<int, const char *> summaryNames = {
     {0, "Success"},
@@ -157,45 +153,45 @@ static const std::unordered_map<int, const char *> descriptionNames = {
     {0x3E8, "Invalid selection"}};
 
 inline std::string decode(Result res) {
-  int lvl = R_LEVEL(res);
-  int sum = R_SUMMARY(res);
-  int mod = R_MODULE(res);
-  int desc = R_DESCRIPTION(res);
+    int lvl = R_LEVEL(res);
+    int sum = R_SUMMARY(res);
+    int mod = R_MODULE(res);
+    int desc = R_DESCRIPTION(res);
 
-  const char *lvlStr = levelNames.count(lvl) ? levelNames.at(lvl) : "Unknown";
-  const char *sumStr =
-      summaryNames.count(sum) ? summaryNames.at(sum) : "Unknown";
-  const char *modStr = moduleNames.count(mod) ? moduleNames.at(mod) : "Unknown";
-  const char *descStr =
-      descriptionNames.count(desc) ? descriptionNames.at(desc) : "Unknown";
+    const char *lvlStr = levelNames.count(lvl) ? levelNames.at(lvl) : "Unknown";
+    const char *sumStr =
+        summaryNames.count(sum) ? summaryNames.at(sum) : "Unknown";
+    const char *modStr = moduleNames.count(mod) ? moduleNames.at(mod) : "Unknown";
+    const char *descStr =
+        descriptionNames.count(desc) ? descriptionNames.at(desc) : "Unknown";
 
-  char buf[512];
-  snprintf(buf, sizeof(buf),
-           "Result: 0x%08lX\n"
-           " Level: %s (%d)\n"
-           " Summary: %s (%d)\n"
-           " Module: %s (%d)\n"
-           " Description: %s (%d)",
-           res, lvlStr, lvl, sumStr, sum, modStr, mod, descStr, desc);
+    char buf[512];
+    snprintf(buf, sizeof(buf),
+             "Result: 0x%08lX\n"
+             " Level: %s (%d)\n"
+             " Summary: %s (%d)\n"
+             " Module: %s (%d)\n"
+             " Description: %s (%d)",
+             res, lvlStr, lvl, sumStr, sum, modStr, mod, descStr, desc);
 
-  return std::string(buf);
+    return std::string(buf);
 }
 
 inline void show(Result res, bool softwareReset = false) {
-  errorConf err;
-  errorInit(&err, ERROR_TEXT_WORD_WRAP, CFG_LANGUAGE_EN);
-  err.softwareReset = softwareReset;
-  std::string msg = decode(res);
-  errorText(&err, msg.c_str());
-  errorDisp(&err);
+    errorConf err;
+    errorInit(&err, ERROR_TEXT_WORD_WRAP, CFG_LANGUAGE_EN);
+    err.softwareReset = softwareReset;
+    std::string msg = decode(res);
+    errorText(&err, msg.c_str());
+    errorDisp(&err);
 }
 
 inline void show(const char *msg, bool softwareReset = false) {
-  errorConf err;
-  errorInit(&err, ERROR_TEXT_WORD_WRAP, CFG_LANGUAGE_EN);
-  err.softwareReset = softwareReset;
-  errorText(&err, msg);
-  errorDisp(&err);
+    errorConf err;
+    errorInit(&err, ERROR_TEXT_WORD_WRAP, CFG_LANGUAGE_EN);
+    err.softwareReset = softwareReset;
+    errorText(&err, msg);
+    errorDisp(&err);
 }
 
 } // namespace xs::errors

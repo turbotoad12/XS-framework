@@ -30,6 +30,6 @@ extern const u32 clrClear;
  * @param alpha Value from 0-255 (Transparency)
  * @return u32 (or C2D_Color32)
  */
-u32 color(const std::string &hexStr, int alpha);
+u32 color(const std::string &hexStr, int alpha = 255);
 
 } // namespace xs::graphics

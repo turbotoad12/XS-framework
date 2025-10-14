@@ -16,4 +16,17 @@ namespace xs::graphics {
  */
 void DrawSolidRect(float x, float y, float width, float height, float depth,
                    u32 color);
+/**
+ * @brief Draw a Line.
+ *
+ * @param x1 X coordinate of the start point of the line
+ * @param y1 Y coordinate of the start point of the line
+ * @param x2 X coordinate of the end point of the line
+ * @param y2 Y coordinate of the end point of the line
+ * @param thickness Thickness of the line
+ * @param depth Z coordinate of the line 0.0f - 1.0f
+ * @param color color() format
+ */
+void DrawSolidLine(float x1, float y1, float x2, float y2, float thickness,
+              float depth, u32 color);
 } // namespace xs::graphics

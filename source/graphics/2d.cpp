@@ -7,27 +7,28 @@ namespace xs::graphics {
  *
  * @param x X coordinate of the top-left vertex of the rectangle
  * @param y Y coordinate of the top-left vertex of the rectangle
- * @param depth Z coordinate of the rectangle
+ * @param depth Z coordinate of the rectangle 0.0f - 1.0f
  * @param width Width of the rectangle
  * @param height Height of the rectangle
  * @param color color() format
  */
-void DrawSolidRect(float x, float y, float width, float height, float depth,
+void DrawSolidRect(float x, float y, float depth, float width, float height, 
                    u32 color) {
-  // Diagnostic print to help debug visibility in emulator
-#ifdef DEBUG
-  printf("DrawSolidRect: x=%.1f y=%.1f w=%.1f h=%.1f depth=%.3f color=0x%08X\n",
-         x, y, width, height, depth, color);
-#endif
-  // Draw an extra thin rectangle at depth 0.0 in case depth ordering is
-  // inverted
-  constexpr float kRectOffset = 2.0f;
-  constexpr float kRectScale = 4.0f;
-  C2D_DrawRectSolid(x + kRectOffset, y + kRectOffset, 0.0f, width / kRectScale,
-                    height / kRectScale, color);
-  // Draw an extra thin rectangle at depth 0.0 in case depth ordering is
-  // inverted
-  C2D_DrawRectSolid(x + 2.0f, y + 2.0f, 0.0f, width / 4.0f, height / 4.0f,
-                    color);
+    C2D_DrawRectSolid(x, y, depth, width, height, color);
+}
+/**
+ * @brief Draw a Line.
+ *
+ * @param x1 X coordinate of the start point of the line
+ * @param y1 Y coordinate of the start point of the line
+ * @param x2 X coordinate of the end point of the line
+ * @param y2 Y coordinate of the end point of the line
+ * @param thickness Thickness of the line
+ * @param depth Z coordinate of the line 0.0f - 1.0f
+ * @param color color() format
+ */
+void DrawSolidLine(float x1, float y1, float x2, float y2, float thickness,
+              float depth, u32 color) {
+    C2D_DrawLine(x1, y1, color, x2, y2, color, thickness, depth);
 }
 } // namespace xs::graphics
