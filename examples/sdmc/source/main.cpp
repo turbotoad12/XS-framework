@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
     std::string path;
     Result res = keyboard.getInput(path);
     if (R_FAILED(res)) {
-        printf("Failed to get filepath input: 0x%08lX\n", res);
+        xs::errors::show(res);
         return 1;
     }
     
@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
     std::string text;
     res = keyboard.getInput(text);
     if (R_FAILED(res)) {
-        printf("Failed to get text input: 0x%08lX\n", res);
+        xs::errors::show(res);
         return 1;
     }
 
@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
     if (R_SUCCEEDED(res)) {
         printf("Wrote to sdmc:/%s\n", path.c_str());
     } else {
-        printf("Failed to write file: 0x%08lX\n", res);
+        xs::errors::show(res);
     }
 
     // Read File
@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
     if (R_SUCCEEDED(res)) {
         printf("File contents:\n%s\n", fileData.c_str());
     } else {
-        printf("Failed to read file: 0x%08lX\n", res);
+        xs::errors::show(res);
     }
 
     // Main loop
