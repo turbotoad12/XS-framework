@@ -20,7 +20,8 @@ int main(int argc, char *argv[]) {
 
     // Load the custom font from RomFS and report if it failed (fallback will be system font)
     xs::text::Font font("romfs:/liberationitalic.ttf");
-    const bool customFontLoaded = (font.GetHandle() != 0);
+    Result fontResult = font.GetLoadResult();
+    const bool customFontLoaded = R_SUCCEEDED(fontResult);
 
     // Create Text objects (title uses custom font if available; info uses system font)
     xs::text::Text titleText("XS-Framework Text Example", &font);
@@ -43,7 +44,7 @@ int main(int argc, char *argv[]) {
         if (customFontLoaded) {
             printf("\x1b[6;1HUsing custom font: liberationitalic.ttf\x1b[K");
         } else {
-            printf("\x1b[6;1HCustom font not found; using system font\x1b[K");
+            printf("\x1b[6;1HCustom font failed (0x%08lX); using system font\x1b[K", fontResult);
         }
 
         // --- Begin drawing ---
