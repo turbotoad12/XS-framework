@@ -17,23 +17,26 @@ namespace xs::fs {
  *
  * @param path Path
  * @param data Data to append to the file.
+ * @return Result RL_SUCCESS on success, or an error code on failure
  */
-void AppendFile(const std::string &path, const std::string &data);
+Result AppendFile(const std::string &path, const std::string &data);
 
 /**
  * @brief Reads the entire contents of a file into a string.
  *
  * @param path Path
- * @return std::string File contents (empty on error or if file missing).
+ * @param outData Output string to store file contents
+ * @return Result RL_SUCCESS on success, or an error code on failure
  */
-std::string ReadFile(const std::string &path);
+Result ReadFile(const std::string &path, std::string &outData);
 
 /**
  * @brief Writes data to a file, overwriting any existing contents.
  *
  * @param path Path
  * @param data Data to write to the file.
+ * @return Result RL_SUCCESS on success, or an error code on failure
  */
-void WriteFile(const std::string &path, const std::string &data);
+Result WriteFile(const std::string &path, const std::string &data);
 
 } // namespace xs::fs

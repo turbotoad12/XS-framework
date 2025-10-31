@@ -20,6 +20,7 @@ class Font {
      *
      * Loads a font file using C2D_FontLoad. The font data will be
      * automatically freed when the object is destroyed.
+     * Use GetLoadResult() to check if loading was successful.
      */
     explicit Font(const std::string &fontpath);
 
@@ -55,6 +56,12 @@ class Font {
   bool IsLoaded() const;
 
     /**
+     * @brief Gets the result of the font loading operation.
+     * @return Result RL_SUCCESS on success, or an error code on failure
+     */
+    Result GetLoadResult() const;
+
+    /**
      * @brief Copy constructor (deleted).
      *
      * Font objects cannot be copied to prevent double-free errors.
@@ -70,6 +77,7 @@ class Font {
 
   private:
   C2D_Font fontData = nullptr; ///< Internal citro2d font handle
+  Result loadResult; ///< Result of the font loading operation
 };
 
 /**

@@ -9,9 +9,12 @@ int main(int argc, char *argv[]) {
 
     hid::Swkbd keyboard(hid::SWKBD_NORMAL, 128);
     keyboard.setHint("Enter some text:");
-    std::string input = keyboard.getInput();
-    if (!input.empty()) {
+    std::string input;
+    Result res = keyboard.getInput(input);
+    if (R_SUCCEEDED(res) && !input.empty()) {
         printf("You entered: %s\n", input.c_str());
+    } else if (R_FAILED(res)) {
+        xs::errors::show(res);
     } else {
         printf("No input or cancelled.\n");
     }
