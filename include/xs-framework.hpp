@@ -9,6 +9,7 @@
 #include "graphics/2d.hpp"
 #include "graphics/colors.hpp"
 #include "graphics/screen.hpp"
+#include "text.hpp"
 
 // --- Filesystem includes ---
 #include "fs.hpp"

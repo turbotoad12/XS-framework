@@ -28,5 +28,5 @@ void DrawSolidRect(float x, float y, float width, float height, float depth,
  * @param color color() format
  */
 void DrawSolidLine(float x1, float y1, float x2, float y2, float thickness,
-              float depth, u32 color);
+                   float depth, u32 color);
 } // namespace xs::graphics

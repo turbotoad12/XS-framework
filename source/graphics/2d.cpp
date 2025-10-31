@@ -12,7 +12,7 @@ namespace xs::graphics {
  * @param height Height of the rectangle
  * @param color color() format
  */
-void DrawSolidRect(float x, float y, float depth, float width, float height, 
+void DrawSolidRect(float x, float y, float depth, float width, float height,
                    u32 color) {
     C2D_DrawRectSolid(x, y, depth, width, height, color);
 }
@@ -28,7 +28,7 @@ void DrawSolidRect(float x, float y, float depth, float width, float height,
  * @param color color() format
  */
 void DrawSolidLine(float x1, float y1, float x2, float y2, float thickness,
-              float depth, u32 color) {
+                   float depth, u32 color) {
     C2D_DrawLine(x1, y1, color, x2, y2, color, thickness, depth);
 }
 } // namespace xs::graphics
