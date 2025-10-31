@@ -17,13 +17,23 @@ Font::Font(const std::string &fontpath) {
             fontData = C2D_FontLoad(fontpath.c_str());
             if (!fontData) {
                 printf("xs::text::Font: failed to load font '%s' even after romfsInit()\n", fontpath.c_str());
+                loadResult = MAKERESULT(RL_PERMANENT, RS_NOTFOUND, RM_ROMFS, RD_NOT_FOUND);
+            } else {
+                loadResult = MAKERESULT(RL_SUCCESS, RS_SUCCESS, RM_ROMFS, RD_SUCCESS);
             }
             // Note: we don't call romfsExit() here because ownership of romfs lifecycle
             // should remain with the application. callers that called romfsInit()
             // should call romfsExit() when appropriate.
         } else {
             printf("xs::text::Font: romfsInit() failed with 0x%08X\n", rc);
+            loadResult = rc;
         }
+    } else if (!fontData) {
+        // Font loading failed without romfs path
+        loadResult = MAKERESULT(RL_PERMANENT, RS_NOTFOUND, RM_APPLICATION, RD_NOT_FOUND);
+    } else {
+        // Font loaded successfully
+        loadResult = MAKERESULT(RL_SUCCESS, RS_SUCCESS, RM_APPLICATION, RD_SUCCESS);
     }
 }
 
@@ -47,6 +57,10 @@ C2D_Font Font::GetHandle() const {
 
 bool Font::IsLoaded() const {
     return (fontData != nullptr);
+}
+
+Result Font::GetLoadResult() const {
+    return loadResult;
 }
 
 // Text implementation

@@ -19,7 +19,7 @@ class Swkbd {
 
     void setHint(const char *hint);
     void setValidation(SwkbdValidInput input);
-    std::string getInput();
+    Result getInput(std::string &outText);
 
   private:
     SwkbdState kbd;

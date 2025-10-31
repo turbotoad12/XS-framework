@@ -24,17 +24,16 @@ void Swkbd::setValidation(SwkbdValidInput input) {
     swkbdSetValidation(&kbd, input, 0, 0);
 }
 
-std::string Swkbd::getInput() {
-    std::string out;
-    out.resize(maxLen + 1);
+Result Swkbd::getInput(std::string &outText) {
+    outText.resize(maxLen + 1);
 
-    Result res = swkbdInputText(&kbd, out.data(), out.size());
+    Result res = swkbdInputText(&kbd, outText.data(), outText.size());
     if (R_FAILED(res)) {
-        xs::errors::show(res, true); // shows applet with decoded error
-        return "";
+        outText.clear();
+        return res;
     }
-    out.shrink_to_fit();
-    return out;
+    outText.shrink_to_fit();
+    return MAKERESULT(RL_SUCCESS, RS_SUCCESS, RM_APPLICATION, RD_SUCCESS);
 }
 
 } // namespace xs::hid

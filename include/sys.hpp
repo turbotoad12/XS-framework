@@ -38,9 +38,9 @@ namespace news {
  * @brief Add a text notification (no image).
  * @param title Title text
  * @param message Message text
- * @return true if notification was added successfully
+ * @return Result RL_SUCCESS on success, or an error code on failure
  */
-bool addNotification(const std::string &title, const std::string &message);
+Result addNotification(const std::string &title, const std::string &message);
 /// Basic ASCII-only UTF-8 → UTF-16 converter
 void utf8ToUtf16(u16 *dst, const char *src, size_t maxChars);
 

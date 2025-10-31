@@ -18,7 +18,7 @@ bool isNew3DS() {
 }
 // Implementations for xs::sys::News declared in include/sys.h
 namespace news {
-bool addNotification(const std::string &title, const std::string &message) {
+Result addNotification(const std::string &title, const std::string &message) {
     std::vector<u16> title16(title.size() + 1);
     std::vector<u16> message16(message.size() + 1);
 
@@ -28,11 +28,7 @@ bool addNotification(const std::string &title, const std::string &message) {
     Result res =
         NEWS_AddNotification(title16.data(), title.size(), message16.data(),
                              message.size(), nullptr, 0, false);
-    if (R_FAILED(res)) {
-        xs::errors::show(res, true); // shows applet with decoded error
-        return false;
-    }
-    return true;
+    return res;
 }
 
 void utf8ToUtf16(u16 *dst, const char *src, size_t maxChars) {

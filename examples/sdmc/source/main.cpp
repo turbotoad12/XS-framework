@@ -9,20 +9,36 @@ int main(int argc, char *argv[]) {
 
     hid::Swkbd keyboard(hid::SWKBD_NORMAL, 128);
     keyboard.setHint("Enter a filepath:");
-    std::string path = keyboard.getInput();
+    std::string path;
+    Result res = keyboard.getInput(path);
+    if (R_FAILED(res)) {
+        printf("Failed to get filepath input: 0x%08lX\n", res);
+        return 1;
+    }
+    
     keyboard.setHint("Enter some text:");
-    std::string text = keyboard.getInput();
+    std::string text;
+    res = keyboard.getInput(text);
+    if (R_FAILED(res)) {
+        printf("Failed to get text input: 0x%08lX\n", res);
+        return 1;
+    }
 
     // Write To the file
-    xs::fs::WriteFile("sdmc:/" + path, text);
-    printf("Wrote to sdmc:/ %s\n", path.c_str());
+    res = xs::fs::WriteFile("sdmc:/" + path, text);
+    if (R_SUCCEEDED(res)) {
+        printf("Wrote to sdmc:/%s\n", path.c_str());
+    } else {
+        printf("Failed to write file: 0x%08lX\n", res);
+    }
 
-    // Read FIle
-    std::string fileData = xs::fs::ReadFile("sdmc:/" + path);
-    if (!fileData.empty()) {
+    // Read File
+    std::string fileData;
+    res = xs::fs::ReadFile("sdmc:/" + path, fileData);
+    if (R_SUCCEEDED(res)) {
         printf("File contents:\n%s\n", fileData.c_str());
     } else {
-        printf("File is empty or missing.\n");
+        printf("Failed to read file: 0x%08lX\n", res);
     }
 
     // Main loop
