@@ -28,14 +28,13 @@ int main(int argc, char *argv[]) {
         u32 kDown = xs::hid::control::GetKeysPressed();
         if (kDown & KEY_START)
             break; // Exit back to hbmenu
-        
-        
+
         // Print debug info
         printf("\x1b[1;1HSimple Xs-framework shapes example");
         printf("\x1b[2;1HCPU:     %6.2f%%\x1b[K", C3D_GetProcessingTime() * 6.0f);
         printf("\x1b[3;1HGPU:     %6.2f%%\x1b[K", C3D_GetDrawingTime() * 6.0f);
         printf("\x1b[4;1HCmdBuf:  %6.2f%%\x1b[K", C3D_GetCmdBufUsage() * 100.0f);
-        
+
         // --- Begin drawing ---
         xs::graphics::screen::SceneInit();
         xs::graphics::screen::ClearScreen(top, clrClear);
